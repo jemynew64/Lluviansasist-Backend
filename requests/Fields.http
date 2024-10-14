@@ -1,0 +1,25 @@
+### Obtener todos los campos
+GET http://localhost:3000/api/fields
+
+### Obtener un campo por ID
+GET http://localhost:3000/api/fields/1
+
+### Crear un nuevo campo
+POST http://localhost:3000/api/fields
+Content-Type: application/json
+
+{
+  "description": "New Field",
+  "enabled": true
+}
+
+### Actualizar un campo por ID
+PUT http://localhost:3000/api/fields/1
+Content-Type: application/json
+
+{
+  "description": "Updated Field"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/fields/1

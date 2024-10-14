@@ -1,0 +1,26 @@
+### Obtener todas las inscripciones
+GET http://localhost:3000/api/registrations
+
+### Obtener una inscripción por ID
+GET http://localhost:3000/api/registrations/1
+
+### Crear una nueva inscripción
+POST http://localhost:3000/api/registrations
+Content-Type: application/json
+
+{
+  "idTraining": 1,
+  "idUser": 1,
+  "enabled": true
+}
+
+### Actualizar una inscripción por ID
+PUT http://localhost:3000/api/registrations/1
+Content-Type: application/json
+
+{
+  "idTraining": 2
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/registrations/1

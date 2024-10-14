@@ -1,0 +1,14 @@
+para que crear la base de datos y el mysql
+docker run --name mysql_db -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=dblluvians -p 3306:3306 -d mysql:8.4.2
+ 
+//para conectarte a ella xd
+docker exec -it mysql_db mysql -u root -p
+USE dblluvians;
+SHOW TABLES;
+-------------------
+dentro del archivo por ahora
+ejectua los dos sql na ma xd 
+-------------------------------
+docker-compose down
+docker-compose build
+docker-compose up

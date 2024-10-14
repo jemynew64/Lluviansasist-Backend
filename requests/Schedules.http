@@ -1,0 +1,28 @@
+### Obtener todos los horarios
+GET http://localhost:3000/api/schedules
+
+### Obtener un horario por ID
+GET http://localhost:3000/api/schedules/1
+
+### Crear un nuevo horario
+POST http://localhost:3000/api/schedules
+Content-Type: application/json
+
+{
+  "startTime": "08:00:00",
+  "endTime": "10:00:00",
+  "day": "Monday",
+  "enabled": true
+}
+
+### Actualizar un horario por ID
+PUT http://localhost:3000/api/schedules/1
+Content-Type: application/json
+
+{
+  "startTime": "09:00:00",
+  "endTime": "11:00:00"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/schedules/1

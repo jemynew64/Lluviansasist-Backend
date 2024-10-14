@@ -1,0 +1,25 @@
+### Obtener todas las fechas
+GET http://localhost:3000/api/dates
+
+### Obtener una fecha por ID
+GET http://localhost:3000/api/dates/1
+
+### Crear una nueva fecha
+POST http://localhost:3000/api/dates
+Content-Type: application/json
+
+{
+  "date": "2024-10-03T00:00:00",
+  "enabled": true
+}
+
+### Actualizar una fecha por ID
+PUT http://localhost:3000/api/dates/1
+Content-Type: application/json
+
+{
+  "date": "2024-10-04T00:00:00"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/dates/1

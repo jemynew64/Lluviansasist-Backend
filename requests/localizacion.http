@@ -1,0 +1,28 @@
+### Obtener todas las ubicaciones
+GET http://localhost:3000/api/locations
+
+### Obtener una ubicación por ID
+GET http://localhost:3000/api/locations/1
+
+### Crear una nueva ubicación
+POST http://localhost:3000/api/locations
+Content-Type: application/json
+
+{
+  "branch": "New Branch",
+  "description": "Description",
+  "district": "District",
+  "enabled": true
+}
+
+### Actualizar una ubicación por ID
+PUT http://localhost:3000/api/locations/1
+Content-Type: application/json
+
+{
+  "branch": "Updated Branch",
+  "district": "Updated District"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/locations/1

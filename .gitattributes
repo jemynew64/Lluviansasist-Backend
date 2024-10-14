@@ -1,0 +1,6 @@
+# Indica a Git que normalice los finales de línea
+* text=auto
+
+# Para archivos específicos, como scripts de shell o archivos de texto, puedes especificar:
+*.sh text eol=lf
+*.bat text eol=crlf

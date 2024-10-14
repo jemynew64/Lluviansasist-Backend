@@ -1,0 +1,27 @@
+### Obtener todos los CoachSports
+GET http://localhost:3000/api/coaches
+
+### Obtener un CoachSport por ID
+GET http://localhost:3000/api/coaches/1
+
+### Crear un nuevo CoachSport
+POST http://localhost:3000/api/coaches
+Content-Type: application/json
+
+{
+  "idUser": 1,
+  "idSport": 2,
+  "coachType": "Assistant Coachss",
+  "enabled": true
+}
+
+### Actualizar un CoachSport por ID
+PUT http://localhost:3000/api/coaches/5
+Content-Type: application/json
+
+{
+  "coachType": "Head Coachs"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/coaches/3

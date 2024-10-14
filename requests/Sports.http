@@ -1,0 +1,25 @@
+### Obtener todos los deportes
+GET http://localhost:3000/api/sports
+
+### Obtener un deporte por ID
+GET http://localhost:3000/api/sports/1
+
+### Crear un nuevo deporte
+POST http://localhost:3000/api/sports
+Content-Type: application/json
+
+{
+  "description": "New Sport",
+  "enabled": true
+}
+
+### Actualizar un deporte por ID
+PUT http://localhost:3000/api/sports/1
+Content-Type: application/json
+
+{
+  "description": "Updated Sport"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/sports/1

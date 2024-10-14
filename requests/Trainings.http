@@ -1,0 +1,27 @@
+### Obtener todos los entrenamientos
+GET http://localhost:3000/api/trainings
+
+### Obtener un entrenamiento por ID
+GET http://localhost:3000/api/trainings/1
+
+### Crear un nuevo entrenamiento
+POST http://localhost:3000/api/trainings
+Content-Type: application/json
+
+{
+  "idCoachSport": 1,
+  "idSchedule": 1,
+  "idField": 1,
+  "enabled": true
+}
+
+### Actualizar un entrenamiento por ID
+PUT http://localhost:3000/api/trainings/1
+Content-Type: application/json
+
+{
+  "idField": 2
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/trainings/1

@@ -1,0 +1,36 @@
+### Obtener todos los usuarios
+GET http://localhost:3000/api/users
+
+### Obtener un usuario por ID
+GET http://localhost:3000/api/users/2
+
+### Crear un nuevo usuario
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "password": "123456",
+  "dni": 11145678,
+  "emergency_number": "447654321",
+  "phone": "333456789",
+  "birthDate": "1990-01-01",
+  "gender": "Male",
+  "roleId": 2,
+  "locationId": 1,
+  "enabled": true
+}
+
+### Actualizar un usuario por ID
+PUT http://localhost:3000/api/users/1
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "phone": "987654321"
+}
+
+### Soft Delete (marcar como deshabilitado)
+DELETE http://localhost:3000/api/users/1
