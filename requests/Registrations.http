@@ -9,8 +9,8 @@ POST http://localhost:3000/api/registrations
 Content-Type: application/json
 
 {
-  "idTraining": 1,
-  "idUser": 1,
+  "idTraining": 2,
+  "idUser": 22,
   "enabled": true
 }
 
@@ -24,3 +24,6 @@ Content-Type: application/json
 
 ### Soft Delete (marcar como deshabilitado)
 DELETE http://localhost:3000/api/registrations/1
+
+### Obtener todos los usuarios de un entrenamiento específico
+GET http://localhost:3000/api/extra/2/Listusuarioentrena

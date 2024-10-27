@@ -34,7 +34,7 @@ async function main() {
     console.log("Base de datos sincronizada");
 
     app.listen(3000);
-    console.log("Servidor en el puerto 3000");
+    console.log("Servidor en el puerto http://localhost:3000");
   } catch (error) {
     console.error("Error al iniciar el servidor:", error);
   }

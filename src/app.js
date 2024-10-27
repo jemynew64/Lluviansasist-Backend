@@ -14,6 +14,8 @@ import trainingRoutes from "./routes/Trainings.js";
 import dateRoutes from "./routes/Dates.js";
 import sportRoutes from "./routes/Sports.js";
 import attendanceRoutes from "./routes/Attendance.js";
+//extras
+import rutasextraRoutes from "./routes/compleRoute.js";
 const app = express();
 
 // Middlewares
@@ -32,4 +34,7 @@ app.use("/api/trainings", trainingRoutes);
 app.use("/api/dates", dateRoutes);
 app.use("/api/sports", sportRoutes);
 app.use("/api/attendances", attendanceRoutes);
+//rutas extra
+app.use("/api/extra", rutasextraRoutes);
+
 export default app;

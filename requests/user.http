@@ -11,11 +11,11 @@ Content-Type: application/json
 {
   "firstName": "John",
   "lastName": "Doe",
-  "password": "123456",
-  "dni": 11145678,
-  "emergency_number": "447654321",
-  "phone": "333456789",
-  "birthDate": "1990-01-01",
+  "password": "1234567",
+  "dni": 10335678,
+  "emergency_number": "1476547721",
+  "phone": "313477789",
+  "birthDate": "1991-01-01",
   "gender": "Male",
   "roleId": 2,
   "locationId": 1,
@@ -29,7 +29,9 @@ Content-Type: application/json
 {
   "firstName": "Jane",
   "lastName": "Doe",
-  "phone": "987654321"
+  "phone": "987654321",
+  "enabled": true
+
 }
 
 ### Soft Delete (marcar como deshabilitado)

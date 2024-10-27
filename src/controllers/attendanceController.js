@@ -113,3 +113,31 @@ export const deleteAttendance = async (req, res) => {
     });
   }
 };
+//+----------------------------------------------------------------
+
+// Ingreso masivo de asistencias
+export const bulkCreateAttendances = async (req, res) => {
+  try {
+    // Validación usando Zod: validamos que el array de asistencias esté correctamente estructurado
+    const attendancesData = z.array(AttendanceSchema).parse(req.body);
+
+    // Crear múltiples asistencias en la base de datos
+    const attendances = await Attendance.bulkCreate(
+      attendancesData.map((attendance) => ({
+        ...attendance,
+        enabled: true,
+      }))
+    );
+
+    res.status(201).json({ success: true, data: attendances });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ success: false, error: error.errors });
+    }
+    res.status(500).json({
+      success: false,
+      error: "Error creating attendances",
+      details: error.message,
+    });
+  }
+};
