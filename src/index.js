@@ -26,15 +26,44 @@ Attendance.belongsTo(Registration, {
   as: "registration",
 });
 
+// Función para esperar la conexión a MySQL
+async function waitForMySQLConnection() {
+  const maxAttempts = 10; // Número máximo de intentos
+  let attempts = 0;
+
+  while (attempts < maxAttempts) {
+    try {
+      await sequelize.authenticate(); // Intenta autenticarte
+      console.log("Conexión a la base de datos establecida con éxito.");
+      return true; // Conexión exitosa
+    } catch (error) {
+      attempts++;
+      console.log("Esperando conexión a MySQL...");
+      await new Promise((resolve) => setTimeout(resolve, 5000)); // Esperar 5 segundos entre intentos
+    }
+  }
+
+  console.error("No se pudo conectar a MySQL después de varios intentos.");
+  return false; // Fallo en la conexión
+}
+
 // Sincronizar la base de datos y levantar el servidor
 async function main() {
+  const dbReady = await waitForMySQLConnection(); // Esperar a que MySQL esté listo
+
+  if (!dbReady) {
+    process.exit(1); // Salir si no se pudo conectar
+  }
+
   try {
     await sequelize.sync({ force: false });
     console.log("Base de datos sincronizada");
-    app.listen(3000);
-    console.log("Servidor en el puerto http://localhost:3000");
+    app.listen(3000, () => {
+      console.log("Servidor en el puerto http://localhost:3000");
+    });
   } catch (error) {
     console.error("Error al iniciar el servidor:", error);
+    setTimeout(main, 5000); // Reintentar la conexión después de 5 segundos
   }
 }
 
