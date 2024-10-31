@@ -1,6 +1,8 @@
 // app.js
 import express from "express";
 import morgan from "morgan";
+import swaggerUI from "swagger-ui-express"; // Importar swagger
+import specs from "./swagger/swagger.js";
 
 // Importar rutas
 import userRoutes from "./routes/Users.js";
@@ -16,11 +18,15 @@ import sportRoutes from "./routes/Sports.js";
 import attendanceRoutes from "./routes/Attendance.js";
 //extras
 import rutasextraRoutes from "./routes/compleRoute.js";
+
 const app = express();
 
 // Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
+
+// Configuración de Swagger
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 // Rutas
 app.use("/api/users", userRoutes);

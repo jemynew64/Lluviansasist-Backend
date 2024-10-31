@@ -9,7 +9,6 @@ import { Field } from "./models/field.js";
 import { Schedule } from "./models/schedule.js";
 import { Training } from "./models/training.js";
 import { Attendance } from "./models/attendance.js";
-
 // Define las relaciones
 User.belongsTo(Role, { foreignKey: "roleId", as: "role" });
 User.belongsTo(Location, { foreignKey: "locationId", as: "location" });
@@ -32,7 +31,6 @@ async function main() {
   try {
     await sequelize.sync({ force: false });
     console.log("Base de datos sincronizada");
-
     app.listen(3000);
     console.log("Servidor en el puerto http://localhost:3000");
   } catch (error) {
