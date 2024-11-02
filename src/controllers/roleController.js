@@ -6,7 +6,21 @@ import { z } from "zod"; // Asegúrate de importar Zod
 export const getAllRoles = async (req, res) => {
   try {
     const roles = await Role.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: roles });
+
+    const totalItems = await Role.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: roles,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     console.error("Error fetching roles:", error);
     res.status(500).json({ success: false, error: "Error fetching roles" });

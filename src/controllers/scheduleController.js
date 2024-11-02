@@ -6,7 +6,21 @@ import { z } from "zod"; // Asegúrate de importar Zod
 export const getAllSchedules = async (req, res) => {
   try {
     const schedules = await Schedule.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: schedules });
+
+    const totalItems = await Schedule.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: schedules,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     console.error("Error fetching schedules:", error);
     res.status(500).json({ success: false, error: "Error fetching schedules" });

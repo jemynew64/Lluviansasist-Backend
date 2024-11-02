@@ -1,6 +1,7 @@
 import { Registration } from "../models/registration.js";
 import { RegistrationSchema } from "../schemas.js"; // Asegúrate de que la ruta sea correcta
 import { z } from "zod"; // Asegúrate de importar Zod
+import { User } from "../models/user.js";
 
 // Obtener todas las inscripciones
 export const getAllRegistrations = async (req, res) => {
@@ -8,7 +9,21 @@ export const getAllRegistrations = async (req, res) => {
     const registrations = await Registration.findAll({
       where: { enabled: true },
     });
-    res.json({ success: true, data: registrations });
+
+    const totalItems = await Registration.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: registrations,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     console.error("Error fetching registrations:", error);
     res
@@ -117,6 +132,7 @@ export const getUsersByTrainingId = async (req, res) => {
   const { idTraining } = req.params;
 
   try {
+    // Obtener las inscripciones de usuarios habilitados para un entrenamiento específico
     const registrations = await Registration.findAll({
       where: { idTraining, enabled: true },
       include: [
@@ -137,9 +153,23 @@ export const getUsersByTrainingId = async (req, res) => {
       ],
     });
 
-    if (registrations.length > 0) {
+    // Obtener el total de usuarios registrados para el entrenamiento
+    const totalItems = registrations.length; // Número total de registros encontrados
+    const totalPages = Math.ceil(totalItems / 10); // Suponiendo que muestras 10 usuarios por página
+    const currentPage = 1; // Cambia esto si implementas paginación
+
+    if (totalItems > 0) {
       const users = registrations.map((registration) => registration.user); // Usa el alias correcto aquí
-      res.json({ success: true, data: users });
+      res.json({
+        success: true,
+        data: users,
+        meta: {
+          totalItems,
+          totalPages,
+          currentPage,
+          perPage: 10, // Cambia esto según la lógica de paginación que desees implementar
+        },
+      });
     } else {
       res
         .status(404)

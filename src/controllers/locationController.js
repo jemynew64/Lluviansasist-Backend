@@ -6,15 +6,24 @@ import { z } from "zod"; // Asegúrate de importar Zod
 export const getAllLocations = async (req, res) => {
   try {
     const locations = await Location.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: locations });
+
+    const totalItems = await Location.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: locations,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching locations",
-        details: error.message,
-      });
+    console.error("Error fetching locations:", error);
+    res.status(500).json({ success: false, error: "Error fetching locations" });
   }
 };
 
@@ -29,13 +38,11 @@ export const getLocationById = async (req, res) => {
       res.status(404).json({ success: false, error: "Location not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching location",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching location",
+      details: error.message,
+    });
   }
 };
 
@@ -54,13 +61,11 @@ export const createLocation = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error creating location",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error creating location",
+      details: error.message,
+    });
   }
 };
 
@@ -82,13 +87,11 @@ export const updateLocation = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error updating location",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error updating location",
+      details: error.message,
+    });
   }
 };
 
@@ -108,12 +111,10 @@ export const deleteLocation = async (req, res) => {
       res.status(404).json({ success: false, error: "Location not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error deleting location",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error deleting location",
+      details: error.message,
+    });
   }
 };

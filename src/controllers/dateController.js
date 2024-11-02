@@ -3,18 +3,31 @@ import { DateSchema } from "../schemas.js"; // Asegúrate de que la ruta sea cor
 import { z } from "zod"; // Asegúrate de importar Zod
 
 // Obtener todas las fechas
+// Obtener todas las fechas
 export const getAllDates = async (req, res) => {
   try {
     const dates = await Date.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: dates });
+
+    const totalItems = await Date.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: dates,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching dates",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching dates",
+      details: error.message,
+    });
   }
 };
 
@@ -29,13 +42,11 @@ export const getDateById = async (req, res) => {
       res.status(404).json({ success: false, error: "Date not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching date",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching date",
+      details: error.message,
+    });
   }
 };
 
@@ -54,13 +65,11 @@ export const createDate = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error creating date",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error creating date",
+      details: error.message,
+    });
   }
 };
 
@@ -82,13 +91,11 @@ export const updateDate = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error updating date",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error updating date",
+      details: error.message,
+    });
   }
 };
 
@@ -105,12 +112,10 @@ export const deleteDate = async (req, res) => {
       res.status(404).json({ success: false, error: "Date not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error deleting date",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error deleting date",
+      details: error.message,
+    });
   }
 };

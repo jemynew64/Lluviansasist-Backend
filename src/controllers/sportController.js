@@ -2,11 +2,24 @@ import { Sport } from "../models/sport.js"; // Asegúrate de que la ruta sea cor
 import { SportSchema } from "../schemas.js"; // Asegúrate de que la ruta sea correcta
 import { z } from "zod"; // Asegúrate de importar Zod
 
-// Obtener todos los deportes
 export const getAllSports = async (req, res) => {
   try {
     const sports = await Sport.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: sports });
+
+    const totalItems = await Sport.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: sports,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     console.error("Error fetching sports:", error);
     res.status(500).json({ success: false, error: "Error fetching sports" });

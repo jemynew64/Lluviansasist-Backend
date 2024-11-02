@@ -6,7 +6,21 @@ import { z } from "zod"; // Asegúrate de importar Zod
 export const getAllAttendances = async (req, res) => {
   try {
     const attendances = await Attendance.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: attendances });
+
+    const totalItems = await Attendance.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: attendances,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     res.status(500).json({
       success: false,

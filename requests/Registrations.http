@@ -26,4 +26,4 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/registrations/1
 
 ### Obtener todos los usuarios de un entrenamiento específico
-GET http://localhost:3000/api/extra/2/Listusuarioentrena
+GET http://localhost:3000/api/registrations/1/Listusuarioentrena

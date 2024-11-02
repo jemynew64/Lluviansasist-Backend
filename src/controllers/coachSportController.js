@@ -3,18 +3,31 @@ import { CoachSportSchema } from "../schemas.js"; // Asegúrate de que la ruta s
 import { z } from "zod"; // Asegúrate de importar Zod
 
 // Obtener todos los entrenadores
+// Obtener todos los entrenadores
 export const getAllCoaches = async (req, res) => {
   try {
     const coaches = await CoachSport.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: coaches });
+
+    const totalItems = await CoachSport.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10);
+    const currentPage = 1;
+
+    res.json({
+      success: true,
+      data: coaches,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching coaches",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching coaches",
+      details: error.message,
+    });
   }
 };
 
@@ -29,13 +42,11 @@ export const getCoachById = async (req, res) => {
       res.status(404).json({ success: false, error: "Coach not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching coach",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching coach",
+      details: error.message,
+    });
   }
 };
 
@@ -54,13 +65,11 @@ export const createCoach = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error creating coach",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error creating coach",
+      details: error.message,
+    });
   }
 };
 
@@ -86,13 +95,11 @@ export const updateCoach = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error updating coach",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error updating coach",
+      details: error.message,
+    });
   }
 };
 
@@ -109,12 +116,10 @@ export const deleteCoach = async (req, res) => {
       res.status(404).json({ success: false, error: "Coach not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error deleting coach",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error deleting coach",
+      details: error.message,
+    });
   }
 };

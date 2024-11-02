@@ -187,7 +187,7 @@ router.delete("/:id", deleteRegistration); // Soft delete una inscripción por I
 
 /**
  * @swagger
- * /api/extra/{id}/Listusuarioentrena:
+ * /api/registrations/{id}/Listusuarioentrena:
  *   get:
  *     tags: [Registration]
  *     summary: Obtener todos los usuarios de un entrenamiento específico
@@ -205,12 +205,47 @@ router.delete("/:id", deleteRegistration); // Soft delete una inscripción por I
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Registration'
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       firstName:
+ *                         type: string
+ *                       lastName:
+ *                         type: string
+ *                       dni:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                       birthDate:
+ *                         type: string
+ *                         format: date
+ *                       gender:
+ *                         type: string
+ *                 meta:
+ *                   type: object
+ *                   properties:
+ *                     totalItems:
+ *                       type: integer
+ *                     totalPages:
+ *                       type: integer
+ *                     currentPage:
+ *                       type: integer
+ *                     perPage:
+ *                       type: integer
  *       404:
  *         description: Entrenamiento no encontrado.
  */
-router.get("/extra/:id/Listusuarioentrena", getUsersByTrainingId); // Obtener usuarios de un entrenamiento específico
+
+//router.get("/extra/:id/Listusuarioentrena", getUsersByTrainingId); // Obtener usuarios de un entrenamiento específico
+router.get("/:idTraining/Listusuarioentrena", getUsersByTrainingId); // Obtener usuarios de un entrenamiento específico
 
 export default router;

@@ -5,8 +5,25 @@ import { z } from "zod"; // Asegúrate de importar Zod
 // Obtener todos los usuarios
 export const getAllUsers = async (req, res) => {
   try {
+    // Obtener todos los usuarios habilitados
     const users = await User.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: users });
+
+    // Calcular el total de usuarios
+    const totalItems = await User.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10); // Suponiendo que muestras 10 usuarios por página
+    const currentPage = 1; // Cambia esto si implementas paginación
+
+    // Estructurar la respuesta
+    res.json({
+      success: true,
+      data: users,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10, // Puedes modificar esto según la cantidad de usuarios que muestres por página
+      },
+    });
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ success: false, error: "Error fetching users" });

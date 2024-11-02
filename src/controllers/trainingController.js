@@ -6,7 +6,21 @@ import { z } from "zod"; // Asegúrate de importar Zod
 export const getAllTrainings = async (req, res) => {
   try {
     const trainings = await Training.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: trainings });
+
+    const totalItems = await Training.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10); // Cambia 10 si es necesario
+    const currentPage = 1; // Cambia esto si implementas paginación
+
+    res.json({
+      success: true,
+      data: trainings,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
     console.error("Error fetching trainings:", error);
     res.status(500).json({ success: false, error: "Error fetching trainings" });

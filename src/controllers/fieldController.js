@@ -3,18 +3,31 @@ import { FieldSchema } from "../schemas.js"; // Asegúrate de que la ruta sea co
 import { z } from "zod"; // Asegúrate de importar Zod
 
 // Obtener todos los campos
+// Obtener todos los campos
 export const getAllFields = async (req, res) => {
   try {
     const fields = await Field.findAll({ where: { enabled: true } });
-    res.json({ success: true, data: fields });
+
+    const totalItems = await Field.count({ where: { enabled: true } });
+    const totalPages = Math.ceil(totalItems / 10); // Cambia 10 si es necesario
+    const currentPage = 1; // Cambia esto si implementas paginación
+
+    res.json({
+      success: true,
+      data: fields,
+      meta: {
+        totalItems,
+        totalPages,
+        currentPage,
+        perPage: 10,
+      },
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching fields",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching fields",
+      details: error.message,
+    });
   }
 };
 
@@ -29,13 +42,11 @@ export const getFieldById = async (req, res) => {
       res.status(404).json({ success: false, error: "Field not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error fetching field",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error fetching field",
+      details: error.message,
+    });
   }
 };
 
@@ -54,13 +65,11 @@ export const createField = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error creating field",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error creating field",
+      details: error.message,
+    });
   }
 };
 
@@ -82,13 +91,11 @@ export const updateField = async (req, res) => {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ success: false, error: error.errors });
     }
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error updating field",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error updating field",
+      details: error.message,
+    });
   }
 };
 
@@ -105,12 +112,10 @@ export const deleteField = async (req, res) => {
       res.status(404).json({ success: false, error: "Field not found" });
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: "Error deleting field",
-        details: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      error: "Error deleting field",
+      details: error.message,
+    });
   }
 };
