@@ -1,6 +1,7 @@
 import { User } from "../models/user.js"; // Asegúrate de que la ruta sea correcta
 import { UserSchema } from "../schemas.js"; // Asegúrate de que la ruta sea correcta
 import { z } from "zod"; // Asegúrate de importar Zod
+import bcrypt from "bcryptjs"; // Cambiado a bcryptjs
 
 // Obtener todos los usuarios
 export const getAllUsers = async (req, res) => {
@@ -49,11 +50,13 @@ export const getUserById = async (req, res) => {
 // Crear un nuevo usuario
 export const createUser = async (req, res) => {
   try {
-    // Validar usando Zod
     const validatedData = UserSchema.parse(req.body);
 
+    // Encriptar la contraseña antes de crear el usuario
+    const hashedPassword = await bcrypt.hash(validatedData.password, 10); // El número 10 es el saltRounds
     const newUser = await User.create({
       ...validatedData,
+      password: hashedPassword, // Asigna la contraseña encriptada
       enabled: true,
     });
 
@@ -76,9 +79,18 @@ export const updateUser = async (req, res) => {
   try {
     const user = await User.findByPk(id);
     if (user) {
-      const validatedData = UserSchema.partial().parse(req.body); // Permite campos opcionales
-      Object.assign(user, validatedData); // Actualiza solo los campos proporcionados
+      // Validar y permitir campos opcionales
+      const validatedData = UserSchema.partial().parse(req.body);
+
+      // Si se incluye el campo password en la actualización, encriptarlo
+      if (validatedData.password) {
+        validatedData.password = await bcrypt.hash(validatedData.password, 10); // Encriptación de la nueva contraseña
+      }
+
+      // Asignar los datos validados (incluida la contraseña encriptada si se actualizó)
+      Object.assign(user, validatedData);
       await user.save();
+
       res.json({ success: true, data: user });
     } else {
       res.status(404).json({ success: false, error: "User not found" });
