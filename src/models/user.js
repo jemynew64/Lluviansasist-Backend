@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
 export const User = sequelize.define(
-  "User", // Nombre del modelo en mayúscula
+  "User",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -16,6 +16,11 @@ export const User = sequelize.define(
     lastName: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,

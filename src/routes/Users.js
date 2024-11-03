@@ -32,6 +32,9 @@ const router = Router();
  *         lastName:
  *           type: string
  *           example: Doe
+ *         username:
+ *           type: string
+ *           example: johndoe123
  *         password:
  *           type: string
  *           example: 1234567
@@ -70,6 +73,9 @@ const router = Router();
  *         lastName:
  *           type: string
  *           example: Doe
+ *         username:
+ *           type: string
+ *           example: johndoe123
  *         password:
  *           type: string
  *           example: 1234567
@@ -102,6 +108,7 @@ const router = Router();
  *       required:
  *         - firstName
  *         - lastName
+ *         - username
  *         - password
  *         - dni
  *         - emergency_number
@@ -215,6 +222,9 @@ router.post("/", createUser); // Crear un nuevo usuario
  *               lastName:
  *                 type: string
  *                 example: Doe
+ *               username:
+ *                 type: string
+ *                 example: janedoe123
  *               phone:
  *                 type: string
  *                 example: 987654321

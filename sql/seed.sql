@@ -20,9 +20,10 @@ INSERT INTO Sports (description, enabled) VALUES
 ('Basketball', 1);
 
 -- Insertar Users
-INSERT INTO Users (firstName, lastName, password, dni, emergency_number, phone, birthDate, gender, roleId, locationId, enabled) VALUES
-('John', 'Doe', 'password123', 12345678, '987654321', 999999999, '1990-01-01', 'Male', 1, 1, 1),
-('Jane', 'Smith', 'password456', 87654321, '123456789', 888888888, '1995-05-05', 'Female', 2, 1, 1);
+INSERT INTO Users (firstName, lastName, username, password, dni, emergency_number, phone, birthDate, gender, roleId, locationId, enabled) VALUES
+('John', 'Doe', 'johndoe', 'password123', 12345678, '987654321', 999999999, '1990-01-01', 'Male', 1, 1, 1),
+('Jane', 'Smith', 'janesmith', 'password456', 87654321, '123456789', 888888888, '1995-05-05', 'Female', 2, 1, 1);
+
 
 -- Insertar CoachSports
 INSERT INTO CoachSports (idUser, idSport, coachType, enabled) VALUES

@@ -1,12 +1,11 @@
+
 services:
   db:
     image: mysql:8.4.2
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: dblluvians
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456  # Contraseña para el usuario root
+      MYSQL_DATABASE: dblluvians     # Base de datos a crear
       MYSQL_CHARSET: utf8mb4
       MYSQL_COLLATION: utf8mb4_general_ci
 
@@ -25,8 +24,8 @@ services:
     container_name: node_app
     environment:
       DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: 123456
+      DB_USER: root                   # Utiliza el usuario root
+      DB_PASSWORD: 123456             # Utiliza la misma contraseña configurada para root
       DB_NAME: dblluvians
     ports:
       - "3000:3000"

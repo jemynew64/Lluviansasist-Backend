@@ -16,6 +16,7 @@ import trainingRoutes from "./routes/Trainings.js";
 import dateRoutes from "./routes/Dates.js";
 import sportRoutes from "./routes/Sports.js";
 import attendanceRoutes from "./routes/Attendance.js";
+import sesionRoutes from "./routes/Sesions.js";
 //extras
 import rutasextraRoutes from "./routes/compleRoute.js";
 
@@ -40,6 +41,7 @@ app.use("/api/trainings", trainingRoutes);
 app.use("/api/dates", dateRoutes);
 app.use("/api/sports", sportRoutes);
 app.use("/api/attendances", attendanceRoutes);
+app.use("/api/sesions", sesionRoutes);
 //rutas extra
 app.use("/api/extra", rutasextraRoutes);
 

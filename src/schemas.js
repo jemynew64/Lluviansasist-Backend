@@ -35,6 +35,7 @@ export const UserSchema = z.object({
   id: z.number().int().optional(), // Opcional para creación
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
+  username: z.string().min(1, "Username is required"), // Campo nuevo
   password: z.string().min(6, "Password must be at least 6 characters long"),
   dni: z.number().int().positive(),
   emergency_number: z.string().min(1, "Emergency number is required"),
@@ -110,4 +111,8 @@ export const DateSchema = z.object({
     message: "Invalid date",
   }),
   enabled: z.boolean().default(true),
+});
+export const LoginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });

@@ -46,6 +46,7 @@ CREATE TABLE `Users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
   `dni` int NOT NULL UNIQUE,
   `emergency_number` varchar(15) NOT NULL,
